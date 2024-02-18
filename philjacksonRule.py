@@ -46,7 +46,6 @@ for index, row in teamAndYears_df.iterrows():
     data2 = TeamYearByYearStats(team_id=row['TeamID'],league_id='00',per_mode_simple='PerGame',season_type_all_star='Regular Season')
     time.sleep(1)
     df2 = data2.get_data_frames()[0]
-    df2 = df2.loc[df2['NBA_FINALS_APPEARANCE'] == 'LEAGUE CHAMPION']
     df_allTeams_data = pd.concat([df_allTeams_data,df2],join='inner')
 
 
@@ -64,15 +63,16 @@ df_processing_av = df_processing_av[df_processing_av['YEAR'].isin(years)]
 export_data = []
 
 for index, row in df_processing_av.iterrows():
+    myList = []
     data = TeamGameLog(season=row['YEAR'], season_type_all_star='Regular Season', team_id=row['TEAM_ID'])
     time.sleep(1)
     df = data.get_data_frames()[0]
     
-    myList = []
     if len(df) < 59:
+        print('teste1')
         df_my_count = df.copy()
         my_count = df_my_count.value_counts('WL')
-        if my_count[0] >= math.floor(len(df)*0.67):
+        if my_count.filter(items=['W'])[0] >= math.floor(len(df_my_count)*0.67):
             myList.append(True)
         else:
             myList.append(False)
@@ -82,6 +82,7 @@ for index, row in df_processing_av.iterrows():
                  'Team':row['TEAM_NAME'],
                  'Season':row['YEAR'],
                  'Record':str(row['WINS']) + '-' + str(row['LOSSES']),
+                 'Season Result': row['NBA_FINALS_APPEARANCE'],
                  'PJ Positive': True
                  })
         else:
@@ -89,16 +90,19 @@ for index, row in df_processing_av.iterrows():
                  'Team':row['TEAM_NAME'],
                  'Season':row['YEAR'],
                  'Record':str(row['WINS']) + '-' + str(row['LOSSES']),
+                 'Season Result': row['NBA_FINALS_APPEARANCE'],
                  'PJ Positive': False
                  })
             
      
     else:
+        print('teste2')
 
         for i in range(0, len(df)-59):
-            df_my_count = df.iloc[0+i:59+i]
+            df_my_count = df.copy()
+            df_my_count = df_my_count.iloc[0+i:59+i]
             my_count = df_my_count.value_counts('WL')
-            if my_count[0] >= 40:
+            if my_count.filter(items=['W'])[0] >= 40:
                 myList.append(True)
             else:
                 myList.append(False)
@@ -108,6 +112,7 @@ for index, row in df_processing_av.iterrows():
                  'Team':row['TEAM_NAME'],
                  'Season':row['YEAR'],
                  'Record':str(row['WINS']) + '-' + str(row['LOSSES']),
+                 'Season Result': row['NBA_FINALS_APPEARANCE'],
                  'PJ Positive': True
                  })
         else:
@@ -115,6 +120,7 @@ for index, row in df_processing_av.iterrows():
                  'Team':row['TEAM_NAME'],
                  'Season':row['YEAR'],
                  'Record':str(row['WINS']) + '-' + str(row['LOSSES']),
+                 'Season Result': row['NBA_FINALS_APPEARANCE'],
                  'PJ Positive': False
                  })
             
