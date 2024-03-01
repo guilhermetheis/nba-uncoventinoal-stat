@@ -1,4 +1,4 @@
-name: Reddit Sidebar Updater
+name: Generate 3P
 
 on:
   workflow_dispatch:
