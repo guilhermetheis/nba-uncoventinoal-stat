@@ -56,9 +56,9 @@ teamRecords_3PPCT = pd.DataFrame(columns=('Team', 'W-L Elite','W-L Very Good','W
 for teamName in teamsID:
     
     data = TeamGameLog(season=seasonID, season_type_all_star='Regular Season', team_id=teamsID[teamName])
-    time.sleep(20)
+    time.sleep(40)
     df = data.get_data_frames()[0]
-    time.sleep(20)
+    time.sleep(40)
 
     
     df_el = df.copy()
