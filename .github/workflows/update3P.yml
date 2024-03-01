@@ -23,3 +23,11 @@ jobs:
       - name: Run Script
         run: |
           python tools/generate3PAllTeams.py
+          
+      - name: Commit scrapping
+        run: |
+          git config --global user.name 'guilhermetheis'
+          git config --global user.email 'guilhermetheis15@gmail.com'
+          git add .
+          git commit -am "Update the 3P CSV"
+          git push

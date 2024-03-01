@@ -7,6 +7,7 @@ Created on Wed Feb 14 09:37:00 2024
 
 import nba_api
 import pandas as pd
+import time
 
 from nba_api.stats.endpoints import TeamGameLog
 
@@ -55,6 +56,7 @@ teamRecords_3PPCT = pd.DataFrame(columns=('Team', 'W-L Elite','W-L Very Good','W
 for teamName in teamsID:
     
     data = TeamGameLog(season=seasonID, season_type_all_star='Regular Season', team_id=teamsID[teamName])
+    time.sleep(10)
     df = data.get_data_frames()[0]
     
     df_el = df.copy()
