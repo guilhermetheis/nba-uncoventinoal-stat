@@ -58,6 +58,8 @@ for teamName in teamsID:
     data = TeamGameLog(season=seasonID, season_type_all_star='Regular Season', team_id=teamsID[teamName])
     time.sleep(20)
     df = data.get_data_frames()[0]
+    time.sleep(20)
+
     
     df_el = df.copy()
     
