@@ -84,9 +84,11 @@ df_processing = df_processing.sort_values('YEAR')
 df_processing_av = df_processing.copy()
 df_processing_av = df_processing_av[df_processing_av['YEAR'].isin(years)]
 df_processing_av.reset_index(drop=True, inplace=True)
-df_processing_av.to_json('Processed data no gamelogs.json')
+df_processing_av.to_json('../data/Processed data no gamelogs.json')
 
-df_processing_av = pd.read_json('Processed data no gamelogs.json')
+### If you want to start here
+
+df_processing_av = pd.read_json('../data/Processed data no gamelogs.json')
 
 export_data = []
 
@@ -253,5 +255,5 @@ for index, row in df_processing_av.iterrows():
                  })
             
 df_export_data = pd.DataFrame(export_data)
-df_export_data.to_csv('PJ Teams.csv')
+df_export_data.to_csv('../data/PJ Teams.csv')
 

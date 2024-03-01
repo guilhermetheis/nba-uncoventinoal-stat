@@ -120,5 +120,5 @@ for teamName in teamsID:
         }, ignore_index=True
         )
     
-teamRecords_3PPCT.to_csv('allTeams3P.csv')
-teamRecords_3PPCT.to_markdown('allTeams3P.md', stralign='left',numalign='center', index=False, floatfmt='.3f')
+teamRecords_3PPCT.to_csv('../data/csv/allTeams3P.csv')
+teamRecords_3PPCT.to_markdown('../data/allTeams3P.md', stralign='left',numalign='center', index=False, floatfmt='.3f')
