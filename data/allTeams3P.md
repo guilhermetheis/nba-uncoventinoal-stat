@@ -30,3 +30,5 @@
 | Washington Wizards     | 1-10        | 3-6             | 1-5                 | 3-7                 | 1-10      | 0-13       |   0.091    |     0.333      |       0.167        |       0.300        |  0.091   |   0.000   |
 | Detroit Pistons        | 5-11        | 1-3             | 2-5                 | 1-11                | 0-5       | 0-16       |   0.312    |     0.250      |       0.286        |       0.083        |  0.000   |   0.000   |
 | Charlotte Hornets      | 6-10        | 2-8             | 1-2                 | 2-3                 | 0-3       | 4-20       |   0.375    |     0.200      |       0.333        |       0.400        |  0.000   |   0.167   |
+
+> Elite: above 42% from 3, Very Good: below 42% and above or equal to 39%, Above Average: below 39% and equal or above 36.7%, Below Average: below 36.7% and equal or above 33.3%, Bad: below 33.3% and above or equal to 30%, Poor: below 30%
