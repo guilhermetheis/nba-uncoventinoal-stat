@@ -55,7 +55,7 @@ teamRecords_3PPCT = pd.DataFrame(columns=('Team', 'W-L Elite','W-L Very Good','W
 #     print(teamsID[x])
 for teamName in teamsID:
     
-    data = TeamGameLog(season=seasonID, season_type_all_star='Regular Season', team_id=teamsID[teamName], timeout=100)
+    data = TeamGameLog(season=seasonID, season_type_all_star='Regular Season', team_id=teamsID[teamName], proxy='127.0.0.1:80', timeout=100)
     time.sleep(.600)
     df = data.get_data_frames()[0]
     time.sleep(.600)
