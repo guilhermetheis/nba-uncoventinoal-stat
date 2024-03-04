@@ -55,7 +55,7 @@ teamRecords_3PPCT = pd.DataFrame(columns=('Team', 'W-L Elite','W-L Very Good','W
 #     print(teamsID[x])
 for teamName in teamsID:
     
-    data = TeamGameLog(season=seasonID, season_type_all_star='Regular Season', team_id=teamsID[teamName])
+    data = TeamGameLog(season=seasonID, season_type_all_star='Regular Season', team_id=teamsID[teamName], timeout=100)
     time.sleep(.600)
     df = data.get_data_frames()[0]
     time.sleep(.600)
@@ -129,6 +129,7 @@ teamRecords_3PPCT.to_markdown('../data/allTeams3P.md', stralign='left',numalign=
 
 extra_text='> Elite: above 42% from 3, Very Good: below 42% and above or equal to 39%, Above Average: below 39% and equal or above 36.7%, Below Average: below 36.7% and equal or above 33.3%, Bad: below 33.3% and above or equal to 30%, Poor: below 30%'
 
-f = open("../data/allTeams3P.md", "r")
-readme = f.read()+'\n\n'+extra_text
+f = open("../data/allTeams3P.md", "a")
+f.write('\n\n'+extra_text)
+f.close()
 
