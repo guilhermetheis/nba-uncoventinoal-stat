@@ -1,17 +1,14 @@
 # -*- coding: utf-8 -*-
 """
-Created on Fri Feb 16 10:23:36 2024
+Created on Thu Mar  7 10:49:40 2024
 
 @author: 20195511
 """
 
 import pandas as pd
 import time
-from nba_api.stats.endpoints import LeagueStandings
 from nba_api.stats.endpoints import TeamGameLog
-from nba_api.stats.endpoints import TeamYearByYearStats
 import math
-
 
 
 #LUT
@@ -54,41 +51,9 @@ for i in range(53):
     else:
         years.append(str(1970+i) + '-' + str(71+i-100))
         yearsAfter03.append(str(1970+i) + '-' + str(71+i-100))
-    
-for seasonVar in years: #getting all the data from all the teams in all the seasons
-    # print(season)
-    data = LeagueStandings(league_id='00',season=seasonVar,season_type='Regular Season')
-    time.sleep(1)
-    df = data.get_data_frames()[0]
-    df['Season'] = seasonVar
-    teamAndYears_df=pd.concat([teamAndYears_df,df],join='inner')
-    
-df_allTeams_data = pd.DataFrame(columns = ['TEAM_ID','TEAM_NAME', 'YEAR', 'WINS', 'LOSSES', 'CONF_RANK','PO_WINS','PO_LOSSES', 'NBA_FINALS_APPEARANCE'])
+        
 
-
-for index, row in teamAndYears_df.iterrows():
-    data2 = TeamYearByYearStats(team_id=row['TeamID'],league_id='00',per_mode_simple='PerGame',season_type_all_star='Regular Season')
-    time.sleep(1)
-    df2 = data2.get_data_frames()[0]
-    df_allTeams_data = pd.concat([df_allTeams_data,df2],join='inner')
-
-
-# Drop all the duplicates
-
-df_processing = df_allTeams_data.copy()
-df_processing = df_processing.drop_duplicates()
-df_processing = df_processing.sort_values('YEAR')
-
-#Get data based on available gamelog data
-
-df_processing_av = df_processing.copy()
-df_processing_av = df_processing_av[df_processing_av['YEAR'].isin(years)]
-df_processing_av.reset_index(drop=True, inplace=True)
-df_processing_av.to_json('../data/Processed data no gamelogs.json')
-
-### If you want to start here
-
-df_processing_av = pd.read_json('../data/Processed data no gamelogs.json')
+df_processing_av = pd.read_json('../data/json/Processed data no gamelogs.json')
 
 export_data = []
 
@@ -204,24 +169,9 @@ for index, row in df_processing_av.iterrows():
             myList.append(False)
             
         if any(myList):
-            export_data.append({
-                 'Team':row['TEAM_NAME'],
-                 'Season':row['YEAR'],
-                 'Record':str(row['WINS']) + '-' + str(row['LOSSES']),
-                 'Season Result': row['NBA_FINALS_APPEARANCE'],
-                 'PJ Positive': True,
-                 'Playoffs Results': PO_elim
-                 })
+            PJ_stats = True
         else:
-            export_data.append({
-                 'Team':row['TEAM_NAME'],
-                 'Season':row['YEAR'],
-                 'Record':str(row['WINS']) + '-' + str(row['LOSSES']),
-                 'Season Result': row['NBA_FINALS_APPEARANCE'],
-                 'PJ Positive': False,
-                 'Playoffs Results': PO_elim
-                 })
-            
+            PJ_stats = False
      
     else:
         # print('teste2')
@@ -236,24 +186,22 @@ for index, row in df_processing_av.iterrows():
                 myList.append(False)
                 
         if any(myList):
-            export_data.append({
-                 'Team':row['TEAM_NAME'],
-                 'Season':row['YEAR'],
-                 'Record':str(row['WINS']) + '-' + str(row['LOSSES']),
-                 'Season Result': row['NBA_FINALS_APPEARANCE'],
-                 'PJ Positive': True,
-                 'Playoffs Results': PO_elim
-                 })
+            PJ_stats = True
         else:
-            export_data.append({
-                 'Team':row['TEAM_NAME'],
-                 'Season':row['YEAR'],
-                 'Record':str(row['WINS']) + '-' + str(row['LOSSES']),
-                 'Season Result': row['NBA_FINALS_APPEARANCE'],
-                 'PJ Positive': False,
-                 'Playoffs Results': PO_elim
-                 })
-            
-df_export_data = pd.DataFrame(export_data)
-df_export_data.to_csv('../data/PJ Teams.csv')
+            PJ_stats = False
 
+    df = df.assign(streak=(df['WL'] != df['WL'].shift()).cumsum())
+    df= (df.assign(streak=(df['WL'] != df['WL'].shift()).cumsum()).groupby('streak').filter(lambda g:(g['WL'].iloc[0] == 'L') & (len(g) > 1)).drop_duplicates('streak'))
+    
+    export_data.append({
+         'Team':row['TEAM_NAME'],
+         'Season':row['YEAR'],
+         'Record':str(row['WINS']) + '-' + str(row['LOSSES']),
+         'Loss Streaks in season':len(df),
+         'Finals Stats':PO_elim,
+         'Phil Jackson Achieved': PJ_stats
+         })
+
+
+df_export_data = pd.DataFrame(export_data)
+df_export_data.to_csv('../data/csv/historical_Phil_Jackson_adapt_and_loss_Streaks.csv')

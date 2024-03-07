@@ -1,2 +1,3 @@
-# nba-uncoventinoal-stat
-Script made to find some weird nba stats
+# Nba Unconventional Stat
+
+This project aims to create a few "weird" nba stats. The first 

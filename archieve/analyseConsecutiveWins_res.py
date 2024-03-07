@@ -54,8 +54,3 @@ for index, row in final_df.iterrows():
      
 df_final_consecutive = pd.DataFrame(final_consecutive)
 df_final_consecutive.to_csv('lossStreaks.csv')
-
-
-
-         
-    
