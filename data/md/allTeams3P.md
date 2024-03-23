@@ -34,3 +34,5 @@
 > Elite: above 42% from 3, Very Good: below 42% and above or equal to 39%, Above Average: below 39% and equal or above 36.7%, Below Average: below 36.7% and equal or above 33.3%, Bad: below 33.3% and above or equal to 30%, Poor: below 30%
 
 > Elite: above 42% from 3, Very Good: below 42% and above or equal to 39%, Above Average: below 39% and equal or above 36.7%, Below Average: below 36.7% and equal or above 33.3%, Bad: below 33.3% and above or equal to 30%, Poor: below 30%
+
+> Elite: above 42% from 3, Very Good: below 42% and above or equal to 39%, Above Average: below 39% and equal or above 36.7%, Below Average: below 36.7% and equal or above 33.3%, Bad: below 33.3% and above or equal to 30%, Poor: below 30%

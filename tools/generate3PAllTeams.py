@@ -5,7 +5,6 @@ Created on Wed Feb 14 09:37:00 2024
 @author: 20195511
 """
 
-import nba_api
 import pandas as pd
 import time
 
@@ -49,7 +48,7 @@ seasonTypes = ['Pre Season', 'All Star', 'Regular Season', 'Playoffs']
 seasonID = '2023-24' ## Current season
 
 # Code
-teamRecords_3PPCT = pd.DataFrame(columns=('Team', 'W-L Elite','W-L Very Good','W-L Above Average','W-L Below Average','W-L Bad','W-L Poor','W% Elite','W% Very Good','W% Above Average','W% Below Average','W% Bad', 'W% Poor'))
+teamRecords_3PPCT = []
 
 # for x in teamsID: ## X gives you name, teamsID[x] gives you the ID
 #     print(teamsID[x])
@@ -94,7 +93,7 @@ for teamName in teamsID:
     below30_L = df_below30['WL'].str.contains('L').sum()
     
     
-    teamRecords_3PPCT = teamRecords_3PPCT.append({
+    teamRecords_3PPCT.append({
         'Team': teamName,
         
         'W-L Elite': str(df_el_W) + '-' + str(df_el_L),
@@ -121,11 +120,11 @@ for teamName in teamsID:
         
         'W% Poor': (below30_W)/(below30_W+below30_L)
         
-        }, ignore_index=True
-        )
+        })
     
-teamRecords_3PPCT.to_csv('../data/csv/allTeams3P.csv')
-teamRecords_3PPCT.to_markdown('../data/allTeams3P.md', stralign='left',numalign='center', index=False, floatfmt='.3f')
+df_teamRecords_3PPCT = pd.DataFrame(teamRecords_3PPCT)    
+df_teamRecords_3PPCT.to_csv('../data/csv/allTeams3P.csv')
+df_teamRecords_3PPCT.to_markdown('../data/allTeams3P.md', stralign='left',numalign='center', index=False, floatfmt='.3f')
 
 extra_text='> Elite: above 42% from 3, Very Good: below 42% and above or equal to 39%, Above Average: below 39% and equal or above 36.7%, Below Average: below 36.7% and equal or above 33.3%, Bad: below 33.3% and above or equal to 30%, Poor: below 30%'
 
