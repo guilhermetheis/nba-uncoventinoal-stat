@@ -204,4 +204,4 @@ for index, row in df_processing_av.iterrows():
 
 
 df_export_data = pd.DataFrame(export_data)
-df_export_data.to_csv('../data/csv/historical_Phil_Jackson_adapt_and_loss_Streaks.csv')
+df_export_data.to_markdown('../data/historical_Phil_Jackson_adapt_and_loss_Streaks.md')
