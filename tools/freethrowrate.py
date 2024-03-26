@@ -37,4 +37,4 @@ for seasons in years:
     result_df[col_name] = df['PLAYER_NAME'] + ' ' + df['PCT_PTS_FT'].astype(str)
 
 result_df.to_csv('../data/csv/PointsPCTFT.csv')
-result_df.to_csv('../data/csv/PointsPCTFT.csv')
+result_df.to_markdown('../data/PointsPCTFT.md')
